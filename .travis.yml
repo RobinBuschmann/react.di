@@ -1,0 +1,19 @@
+language: node_js
+
+node_js:
+  - "7"
+
+before_install:
+  - npm i -g npm@5
+
+install:
+  - npm install
+
+script:
+  - npm run lint
+  - npm run build
+  - npm run test
+  - npm run cover
+
+after_success:
+ - 'nyc report --reporter=lcov > coverage.lcov && codecov'

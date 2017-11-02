@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "jsx": "react",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "noUnusedLocals": true,
+    "sourceMap": true,
+    "pretty": true,
+    "strictNullChecks": true,
+    "lib": ["es6"]
+  },
+  "include": [
+    "lib/**/*",
+    "index.tsx"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

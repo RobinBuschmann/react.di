@@ -1,5 +1,5 @@
 {
-  "name": "direact",
+  "name": "react.di",
   "version": "1.0.0",
   "description": "Dependency injection for react",
   "main": "index.js",
@@ -12,6 +12,27 @@
     "cover": "nyc mocha",
     "lint": "tslint 'src/**/*.ts' 'src/**/*.tsx'",
     "test": "mocha"
+  },
+  "nyc": {
+    "lines": 85,
+    "statements": 85,
+    "functions": 85,
+    "branches": 85,
+    "include": [
+      "lib/**/*"
+    ],
+    "extension": [
+      ".js"
+    ],
+    "reporter": [
+      "lcov",
+      "text",
+      "text-summary"
+    ],
+    "cache": false,
+    "all": true,
+    "check-coverage": true,
+    "report-dir": "./coverage"
   },
   "repository": {
     "type": "git",
@@ -47,8 +68,9 @@
     "react-test-renderer": "^16.0.0",
     "reflect-metadata": "^0.1.10",
     "source-map-support": "^0.5.0",
+    "ts-node": "^3.3.0",
     "tslint": "^5.8.0",
-    "typescript": "^2.6.1"
+    "typescript": "^2.5.3"
   },
   "dependencies": {
     "inversify": "^4.5.0",

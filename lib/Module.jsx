@@ -15,7 +15,7 @@ var inversify_1 = require("inversify");
 var react_1 = require("react");
 var Provider_1 = require("./Provider");
 var Binding_1 = require("./bindings/Binding");
-var Module = (function (_super) {
+var Module = /** @class */ (function (_super) {
     __extends(Module, _super);
     function Module(props, contenxt) {
         var _this = _super.call(this, props, contenxt) || this;

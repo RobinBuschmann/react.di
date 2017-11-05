@@ -11,6 +11,7 @@
     "build": "tsc",
     "cover": "nyc mocha",
     "lint": "tslint 'src/**/*.ts' 'src/**/*.tsx'",
+    "pretest": "tsc --project test",
     "test": "mocha"
   },
   "nyc": {

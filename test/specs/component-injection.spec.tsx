@@ -328,8 +328,3 @@ describe('component-injection', () => {
   });
 
 });
-
-
-
-
-

@@ -37,7 +37,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/RobinBuschmann/direact.git"
+    "url": "git+https://github.com/RobinBuschmann/react.di.git"
   },
   "keywords": [
     "react",
@@ -49,9 +49,9 @@
   "author": "Robin Buschmann",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/RobinBuschmann/direact/issues"
+    "url": "https://github.com/RobinBuschmann/react.di/issues"
   },
-  "homepage": "https://github.com/RobinBuschmann/direact#readme",
+  "homepage": "https://github.com/RobinBuschmann/react.di#readme",
   "devDependencies": {
     "@types/chai": "^4.0.4",
     "@types/enzyme": "^3.1.3",

@@ -7,9 +7,14 @@ Dependency injection for react based upon inversify.
 ### Installation
 ```
 npm install reflect-metadata --save
-```
-```
+
 npm install react.di --save 
+```
+
+Your `tsconfig.json` need to be configured with  the following flags:
+```
+"experimentalDecorators": true,
+"emitDecoratorMetadata": true
 ```
 
 ### Usage
@@ -18,7 +23,9 @@ npm install react.di --save
 import {Injectable} from 'react.di';
 
 @Injectable
-export class UserService {
+export class UserService {`
+  constructor(@Inject private httpClient: SomeHttpClient)
+
   getUser() {}
 }
 ```

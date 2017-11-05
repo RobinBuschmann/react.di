@@ -4,7 +4,7 @@ import {Component} from 'react';
 import {Provider} from './Provider';
 import {Binding, executeBindings} from './bindings/Binding';
 
-interface ModuleProps {
+export interface ModuleProps {
   providers?: Binding[];
   autoBindInjectable?: boolean;
 }
@@ -32,7 +32,7 @@ export class Module extends Component<ModuleProps> {
 
   render() {
     return (
-      React.createElement(Provider, { container: this.container }, this.props.children)
+      React.createElement(Provider, { container: this.container }, this.props.children) as any
     );
   }
 }

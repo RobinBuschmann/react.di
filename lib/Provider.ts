@@ -3,7 +3,7 @@ import {Component} from 'react';
 import {Container} from 'inversify';
 import {object} from 'prop-types';
 
-interface ProviderProps {
+export interface ProviderProps {
   container: Container;
 }
 

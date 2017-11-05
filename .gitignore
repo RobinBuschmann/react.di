@@ -8,6 +8,7 @@ node_modules
 # build
 **/*.js
 **/*.js.map
+**/*.d.ts
 
 # testing
 .nyc_output

@@ -5,5 +5,6 @@ export interface ValueBinding extends BaseBinding {
   useValue: any;
 }
 
-export const bindValue = (container: Container, {provide, useValue}: ValueBinding) =>
+export const bindValue = (container: Container, {provide, useValue}: ValueBinding) => {
   container.bind(provide).toConstantValue(useValue);
+};

@@ -23,7 +23,7 @@ export class UserService {
 }
 ```
 #### 2. Inject service into react component
-```typescript
+```tsx
 import {Inject} from 'react.di';
 
 class User extends Component<any, any> {

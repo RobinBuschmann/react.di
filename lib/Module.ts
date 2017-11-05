@@ -32,9 +32,7 @@ export class Module extends Component<ModuleProps> {
 
   render() {
     return (
-      <Provider container={this.container}>
-        {this.props.children}
-      </Provider>
+      React.createElement(Provider, { container: this.container }, this.props.children)
     );
   }
 }

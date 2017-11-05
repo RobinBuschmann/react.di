@@ -1,6 +1,5 @@
 --require source-map-support/register
 --require test/dom.shim.js
 --recursive
---full-trace
---bail
-test/specs/**/*.spec.jsx test/specs/**/*.spec.js
+
+test/specs/**/*.spec.js

@@ -3,7 +3,6 @@
     "target": "es5",
     "module": "commonjs",
     "moduleResolution": "node",
-    "jsx": "react",
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "noUnusedLocals": true,
@@ -13,8 +12,8 @@
     "lib": ["es6"]
   },
   "include": [
-    "lib/**/*",
-    "index.tsx"
+    "lib/**/*.ts",
+    "index.ts"
   ],
   "exclude": [
     "node_modules"

@@ -1,7 +1,8 @@
 import 'reflect-metadata';
-import {componentInject} from './component-injection';
-import {inject, interfaces} from 'inversify';
+import {interfaces} from 'inversify';
 import ServiceIdentifier = interfaces.ServiceIdentifier;
+import {componentInject} from './component-injection';
+import {serviceInject} from './service-injection';
 
 export function Inject(target: object, propertyKey: string | symbol, parameterIndex: number);
 export function Inject(target: object, propertyKey: string | symbol);
@@ -23,16 +24,7 @@ function decorate(target: object,
                   parameterIndex: number | undefined,
                   identifier?: ServiceIdentifier<any>) {
   if (typeof parameterIndex === 'number') {
-    if (!identifier) {
-      const types = Reflect.getMetadata('design:paramtypes', target);
-      if (types && types[parameterIndex]) {
-        identifier = types[parameterIndex];
-      }
-      if (!identifier) {
-        throw new Error(`No identifier defined for parameter [${parameterIndex}] in ${target['name']}`);
-      }
-    }
-    inject(identifier)(target, propertyKey as string, parameterIndex);
+    serviceInject(target, propertyKey, parameterIndex, identifier);
   } else {
     componentInject(target, propertyKey, identifier);
   }

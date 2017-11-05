@@ -1,4 +1,5 @@
 import {object} from 'prop-types';
+import {Component} from 'react';
 
 export function componentInject(target, propertyKey, identifier?) {
   const type = Reflect.getMetadata('design:type', target, propertyKey);
@@ -15,17 +16,23 @@ function setDependentProperty(target, propertyKey, identifier, isArrayType) {
     configurable: true,
     enumerable: true,
     get() {
-      if (!this.hasOwnProperty(propertyKey)) {
-        const value = this.context.container[GET_KEY](identifier);
-        Object.defineProperty(this, propertyKey, {value});
-        return value;
-      }
+      checkIfContainerExists(this);
+      const value = this.context.container[GET_KEY](identifier);
+      Object.defineProperty(this, propertyKey, {value});
+      return value;
     },
     set() {
       // tslint:disable:no-console
       console.warn(`Value cannot be set before it is injected (${target['constructor'].name} -> ${propertyKey})`);
     }
   });
+}
+
+function checkIfContainerExists(component: Component) {
+  if (!component.context || !component.context.container) {
+    throw new Error(`Component "${component.constructor.name}" need to be nested in a Module or Provider Component` +
+      ` to use dependency injection.`);
+  }
 }
 
 function ensureContainerContextExists(componentClass) {

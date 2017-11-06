@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Dependency injection for react",
   "main": "index.js",
+  "types": "index.d.ts",
   "directories": {
     "lib": "lib",
     "test": "test"

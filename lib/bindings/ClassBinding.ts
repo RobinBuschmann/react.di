@@ -9,8 +9,8 @@ export interface ClassBinding extends BaseBinding {
 
 export const bindClass = (container: Container, {provide, useClass, noSingleton}: ClassBinding) => {
   const binding = container.bind(provide).to(useClass);
-  if (!noSingleton) {
-    binding.inSingletonScope();
+  if (noSingleton) {
+    binding.inTransientScope();
   }
 };
 

@@ -15,7 +15,7 @@ Dependency injection for react based upon [inversify](https://github.com/inversi
   - [providers (Property)](#providers-property)
     - [Injecting a class constructor](#injecting-a-class-constructor)
     - [Injecting a value](#injecting-a-value)
-    - [Injecting via factories](#injecting-via-factories)
+    - [Injection via factories](#injection-via-factories)
   - [autoBindInjectable (Property)](#autoBindInjectable-property)
   - [Module inheritance](#module-inheritance)
  - [Provider (React Component)](#provider-react-component)
@@ -75,8 +75,8 @@ const App = () => (
   <Module providers={[
     {provide: UserService, useClass: UserService},
     UserService, // or shorthand
-    {provide: CONFIG_TOKEN, useValue: config,
-    {provide: CONFIG_TOKEN, useFactory: context => config, // or using factory
+    {provide: CONFIG_TOKEN, useValue: config},
+    {provide: CONFIG_TOKEN, useFactory: context => config}, // or using factory
   ]}>
     <Panel>
       <User/>
@@ -95,14 +95,14 @@ export class UserService {}
 ```
 
 ## Inject
-`Inject`/`Inject(Identifier)` decorator specifies the dependency, that 
+`Inject`/`Inject(Identifier)` decorator specifies the dependency that 
 should be injected.
 
 ### Injection via tokens
 `@Inject(CONFIG_TOKEN) config: Config;`
 
 ### Multi injection
-Multi injection means, that all providers for a specified identifier
+Multi injection means that all providers for a specified identifier
 will be injected.
 So if the annotated type of the dependency is of type `Array`, the 
 injection will automatically processed as a multi-injection. In this 
@@ -143,9 +143,9 @@ export class UserService {
 ## Module (React Component)
 The `<Module>` component is a react component, that specifies the
 entry point for dependency injection. All providers that should
-be available for injection will be defined in its `providers`
+be available for injection will be defined in the components `providers`
 property.
-All components, that should be feedable with the defined providers,
+All components that should be feedable with the defined providers,
 need to be nested in the module component - But don't(!) need to be
 direct children.
 
@@ -153,7 +153,7 @@ direct children.
 Array of all available providers.
 
 #### Injecting a class constructor
-```tsx
+```jsx
 <Module providers={[
   {provide: UserService, useClass: UserService}
 ]}>
@@ -187,7 +187,7 @@ want a dependency to be singleton set `noSingleton` to `true`:
 </Module>
 ```
 
-#### Injecting via factories
+#### Injection via factories
 Dependencies can be injected via factories. A factory is a simple function,
 that gets the context of the current scope and returns the value, that
 will be injected.
@@ -201,14 +201,19 @@ will be injected.
 
 ### `autoBindInjectable` (Property)
 (default: `false`) When `autoBindInjectable` is set to `true`, injectable
-class constructors don't need to be defined as providers, they will be
-available for injection by default. 
+class constructors don't need to be defined as providers anymore.
+They will be available for injection by default. 
 So that `[{provide: UserService, useClass: UserService}]` or `[UserService]`
-can be omitted. 
+can be omitted:
+```tsx
+<Module autoBindInjectable={true}>
+  ... // UserService will be available anyway
+</Module>
+```
 
 ### Module inheritance
 Nesting module components in another module component is supported.
-All defined providers of the parent module, will be inherited to its
+All defined providers of the parent module will be inherited to its
 child modules:
 ```tsx
 <Module providers={[
@@ -216,7 +221,7 @@ child modules:
 ]}>
   ...
   <Module providers={[UserService]}>
-    ...
+    ... // CommonService will be available as well
   </Module>
 </Module>
 ```

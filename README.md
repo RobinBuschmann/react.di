@@ -12,11 +12,11 @@ Dependency injection for react based upon [inversify](https://github.com/inversi
   - [Multi injection](#multi-injection)
   - [Examples](#examples)
  - [Module (React Component)](#module-react-component)
-  - [Providers](#providers)
+  - [providers (Property)](#providers-property)
     - [Injecting a class constructor](#injecting-a-class-constructor)
     - [Injecting a value](#injecting-a-value)
     - [Injecting via factories](#injecting-via-factories)
-  - [autoBindInjectable=true](#autoBindInjectable=true)
+  - [autoBindInjectable (Property)](#autoBindInjectable-property)
   - [Module inheritance](#module-inheritance)
  - [Provider (React Component)](#provider-react-component)
 
@@ -78,7 +78,9 @@ const App = () => (
     {provide: CONFIG_TOKEN, useValue: config,
     {provide: CONFIG_TOKEN, useFactory: context => config, // or using factory
   ]}>
-    <User/>
+    <Panel>
+      <User/>
+    </Panel>
   </Module>
 );
 ```
@@ -139,21 +141,99 @@ export class UserService {
 ```
 
 ## Module (React Component)
-The `<Module>` component 
+The `<Module>` component is a react component, that specifies the
+entry point for dependency injection. All providers that should
+be available for injection will be defined in its `providers`
+property.
+All components, that should be feedable with the defined providers,
+need to be nested in the module component - But don't(!) need to be
+direct children.
 
-### Providers
-TODO
+### `providers` (Property)
+Array of all available providers.
+
 #### Injecting a class constructor
-TODO
-#### Injecting a value
-TODO
-#### Injecting via factories
-TODO
+```tsx
+<Module providers={[
+  {provide: UserService, useClass: UserService}
+]}>
+  ...
+</Module>
+```
+*Shorthand*
+```tsx
+<Module providers={[
+  UserService
+]}>
+  ...
+</Module>
+```
+All instantiated dependencies will be a **singleton** by default. If you don't
+want a dependency to be singleton set `noSingleton` to `true`:
+```tsx
+<Module providers={[
+  {provide: UserService, useClass: UserService, noSingleton: true}
+]}>
+  ...
+</Module>
+```
 
-### `autoBindInjectable=true`
-TODO
+#### Injecting a value
+```tsx
+<Module providers={[
+  {provide: UserService, useValue: someUserService}
+]}>
+  ...
+</Module>
+```
+
+#### Injecting via factories
+Dependencies can be injected via factories. A factory is a simple function,
+that gets the context of the current scope and returns the value, that
+will be injected.
+```tsx
+<Module providers={[
+  {provide: UserService, useFactory: context => someValue}
+]}>
+  ...
+</Module>
+```
+
+### `autoBindInjectable` (Property)
+(default: `false`) When `autoBindInjectable` is set to `true`, injectable
+class constructors don't need to be defined as providers, they will be
+available for injection by default. 
+So that `[{provide: UserService, useClass: UserService}]` or `[UserService]`
+can be omitted. 
+
 ### Module inheritance
-TODO
+Nesting module components in another module component is supported.
+All defined providers of the parent module, will be inherited to its
+child modules:
+```tsx
+<Module providers={[
+  CommonService
+]}>
+  ...
+  <Module providers={[UserService]}>
+    ...
+  </Module>
+</Module>
+```
+Identifiers that are already defined in a parent, will be overridden
+if they are also defined in its child.
 
 ## Provider (React Component)
-TODO
+The `<Provider>` component is a react component, that provides low-level
+support for inversifyJS containers. In other words: It takes an 
+inversify container as property. So if you want to use all features
+of inversify, this is the component you will fall in love with:
+```tsx
+const container = new Container();
+container.bind(Ninja).to(Samurai);
+
+<Provider container={container}>
+  ...
+</Provider>
+``` 
+ 

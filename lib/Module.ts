@@ -26,6 +26,7 @@ export class Module extends Component<ModuleProps> {
   createContainer(props: ModuleProps) {
     const DEFAULT_AUTO_BIND = false;
     return new Container({
+      defaultScope: 'Singleton',
       autoBindInjectable: props.autoBindInjectable !== void 0 ? props.autoBindInjectable : DEFAULT_AUTO_BIND
     });
   }

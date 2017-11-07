@@ -53,7 +53,7 @@ const config: Config = {};
 ```tsx
 import {Inject} from 'react.di';
 
-class UserComponent extends Component<any, any> {
+class UserContainer extends Component<any, any> {
   @Inject userService: UserService;
   @Inject(CONFIG_TOKEN) config: Config;
   
@@ -63,7 +63,7 @@ class UserComponent extends Component<any, any> {
   }
 
   render() {
-    return (<div>{user.name}</div>); 
+    return (<User user={this.state.user} />); 
   }
 }
 ```
@@ -79,14 +79,14 @@ const App = () => (
     {provide: CONFIG_TOKEN, useFactory: context => config}, // or using factory
   ]}>
     <Panel>
-      <User/>
+      <UserContainer/>
     </Panel>
   </Module>
 );
 ```
 
 ## Injectable
-`Injectable` decorator marks a class as available to the inversify `Contaner`.
+`Injectable` decorator marks a class as available to the inversify `Container`.
 ```typescript
 import {Injectable} from 'react.di';
 

@@ -25,7 +25,7 @@ Dependency injection for react based upon [inversify](https://github.com/inversi
 npm install react.di reflect-metadata --save
 ```
 
-Your `tsconfig.json` need to be configured with  the following flags:
+Your `tsconfig.json` needs to be configured with  the following flags:
 ```
 "experimentalDecorators": true,
 "emitDecoratorMetadata": true

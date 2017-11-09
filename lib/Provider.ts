@@ -3,8 +3,6 @@ import {Component, ReactElement} from 'react';
 import {Container} from 'inversify';
 import {object} from 'prop-types';
 
-const isReact16Plus = parseFloat(React.version) >= 16;
-
 export interface ProviderProps {
   container: Container;
 }
@@ -12,11 +10,12 @@ export interface ProviderProps {
 export class Provider extends Component<ProviderProps> {
   static childContextTypes = {container: object.isRequired};
   static contextTypes = {container: object};
+  static isReact16Plus = parseFloat(React.version) >= 16;
 
   constructor(props, context) {
     super(props, context);
 
-    if (!isReact16Plus) {
+    if (!Provider.isReact16Plus) {
       this.render = () => React.Children.only(this.props.children) as any;
     }
   }

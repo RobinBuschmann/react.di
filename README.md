@@ -116,16 +116,11 @@ import {Inject} from 'react.di';
 
 class UserComponent extends Component<any, any> {
   @Inject userService: UserService;
+  @Inject(OtherService) otherService: OtherService;
   @Inject(CONFIG_TOKEN) config: Config;
+  @Inject(TRANSLATION_TOKEN) translations: Translation[];
   
-  async componentDidMount() {
-    const user = await this.userService.getUser();
-    this.setState({user});
-  }
-
-  render() {
-    return (<div>{user.name}</div>); 
-  }
+  ...
 }
 ```
 

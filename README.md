@@ -10,7 +10,8 @@ Dependency injection for react based upon [inversify](https://github.com/inversi
  - [Inject](#inject)
     - [Injection via tokens](#injection-via-tokens)
     - [Multi injection](#multi-injection)
-    - [Examples](#examples)
+    - [Inject into React Components](#inject-into-react-components)
+    - [Inject into Services](#inject-into-services)
  - [Module (React Component)](#module-react-component)
     - [providers (Property)](#providers-property)
       - [Injecting a class constructor](#injecting-a-class-constructor)
@@ -109,8 +110,7 @@ injection will automatically processed as a multi-injection. In this
 case the identifier needs to be passed explicitly:
 `@Inject(INTERCEPTOR_TOKEN) interceptors: Interceptor[];`
 
-### Examples
-*React Components*
+### Inject into React Components
 ```tsx
 import {Inject} from 'react.di';
 
@@ -128,7 +128,8 @@ class UserComponent extends Component<any, any> {
   }
 }
 ```
-*Services*
+
+### Inject into Services
 ```typescript
 import {Injectable, Inject} from 'react.di';
 

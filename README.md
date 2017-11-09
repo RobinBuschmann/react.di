@@ -10,7 +10,8 @@ Dependency injection for react based upon [inversify](https://github.com/inversi
  - [Inject](#inject)
     - [Injection via tokens](#injection-via-tokens)
     - [Multi injection](#multi-injection)
-    - [Examples](#examples)
+    - [Inject into React Components](#inject-into-react-components)
+    - [Inject into Services](#inject-into-services)
  - [Module (React Component)](#module-react-component)
     - [providers (Property)](#providers-property)
       - [Injecting a class constructor](#injecting-a-class-constructor)
@@ -25,7 +26,7 @@ Dependency injection for react based upon [inversify](https://github.com/inversi
 npm install react.di reflect-metadata --save
 ```
 
-Your `tsconfig.json` need to be configured with  the following flags:
+Your `tsconfig.json` needs to be configured with  the following flags:
 ```
 "experimentalDecorators": true,
 "emitDecoratorMetadata": true
@@ -53,7 +54,7 @@ const config: Config = {};
 ```tsx
 import {Inject} from 'react.di';
 
-class UserComponent extends Component<any, any> {
+class UserContainer extends Component<any, any> {
   @Inject userService: UserService;
   @Inject(CONFIG_TOKEN) config: Config;
   
@@ -63,12 +64,12 @@ class UserComponent extends Component<any, any> {
   }
 
   render() {
-    return (<div>{user.name}</div>); 
+    return (<User user={this.state.user} />); 
   }
 }
 ```
 #### 3. Setup module
-```tsx
+```jsx
 import {Module} from 'react.di';
 
 const App = () => (
@@ -79,14 +80,14 @@ const App = () => (
     {provide: CONFIG_TOKEN, useFactory: context => config}, // or using factory
   ]}>
     <Panel>
-      <User/>
+      <UserContainer/>
     </Panel>
   </Module>
 );
 ```
 
 ## Injectable
-`Injectable` decorator marks a class as available to the inversify `Contaner`.
+`Injectable` decorator marks a class as available to the inversify `Container`.
 ```typescript
 import {Injectable} from 'react.di';
 
@@ -109,26 +110,21 @@ injection will automatically processed as a multi-injection. In this
 case the identifier needs to be passed explicitly:
 `@Inject(INTERCEPTOR_TOKEN) interceptors: Interceptor[];`
 
-### Examples
-*React Components*
+### Inject into React Components
 ```tsx
 import {Inject} from 'react.di';
 
 class UserComponent extends Component<any, any> {
   @Inject userService: UserService;
+  @Inject(OtherService) otherService: OtherService;
   @Inject(CONFIG_TOKEN) config: Config;
+  @Inject(TRANSLATION_TOKEN) translations: Translation[];
   
-  async componentDidMount() {
-    const user = await this.userService.getUser();
-    this.setState({user});
-  }
-
-  render() {
-    return (<div>{user.name}</div>); 
-  }
+  ...
 }
 ```
-*Services*
+
+### Inject into Services
 ```typescript
 import {Injectable, Inject} from 'react.di';
 
@@ -161,7 +157,7 @@ Array of all available providers.
 </Module>
 ```
 *Shorthand*
-```tsx
+```jsx
 <Module providers={[
   UserService
 ]}>
@@ -170,7 +166,7 @@ Array of all available providers.
 ```
 All instantiated dependencies will be a **singleton** by default. If you don't
 want a dependency to be singleton set `noSingleton` to `true`:
-```tsx
+```jsx
 <Module providers={[
   {provide: UserService, useClass: UserService, noSingleton: true}
 ]}>
@@ -179,7 +175,7 @@ want a dependency to be singleton set `noSingleton` to `true`:
 ```
 
 #### Injecting a value
-```tsx
+```jsx
 <Module providers={[
   {provide: UserService, useValue: someUserService}
 ]}>
@@ -191,7 +187,7 @@ want a dependency to be singleton set `noSingleton` to `true`:
 Dependencies can be injected via factories. A factory is a simple function,
 that gets the context of the current scope and returns the value, that
 will be injected.
-```tsx
+```jsx
 <Module providers={[
   {provide: UserService, useFactory: context => someValue}
 ]}>
@@ -205,7 +201,7 @@ class constructors don't need to be defined as providers anymore.
 They will be available for injection by default. 
 So that `[{provide: UserService, useClass: UserService}]` or `[UserService]`
 can be omitted:
-```tsx
+```jsx
 <Module autoBindInjectable={true}>
   ... // UserService will be available anyway
 </Module>
@@ -215,7 +211,7 @@ can be omitted:
 Nesting module components in another module component is supported.
 All defined providers of the parent module will be inherited to its
 child modules:
-```tsx
+```jsx
 <Module providers={[
   CommonService
 ]}>
@@ -233,7 +229,7 @@ The `<Provider>` component is a react component, that provides low-level
 support for inversifyJS containers. In other words: It takes an 
 inversify container as property. So if you want to use all features
 of inversify, this is the component you will fall in love with:
-```tsx
+```jsx
 const container = new Container();
 container.bind(Ninja).to(Samurai);
 

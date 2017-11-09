@@ -34,53 +34,57 @@ describe('component-injection', () => {
       }
     }
 
-    it('should inject service (useClass)', () => {
-      let child;
-      mount(
-        <Module providers={[{provide: AService, useClass: AService}]}>
-          <Buffer>
-            <Child onInstance={instance => child = instance}/>
-          </Buffer>
-        </Module>
-      );
-      expect(child).to.have.property('aService').which.is.an.instanceOf(AService);
-    });
+    describe('useClass', () => {
 
-    it('should accessible multiple times', () => {
-      let child;
-      mount(
-        <Module providers={[{provide: AService, useClass: AService}]}>
-          <Buffer>
-            <Child onInstance={instance => child = instance}/>
-          </Buffer>
-        </Module>
-      );
-      expect(child).to.have.property('aService').which.is.an.instanceOf(AService);
-      expect(child).to.have.property('aService').which.is.an.instanceOf(AService);
-    });
+      it('should inject service', () => {
+        let child;
+        mount(
+          <Module providers={[{provide: AService, useClass: AService}]}>
+            <Buffer>
+              <Child onInstance={instance => child = instance}/>
+            </Buffer>
+          </Module>
+        );
+        expect(child).to.have.property('aService').which.is.an.instanceOf(AService);
+      });
 
-    it('should inject service (shorthand for useClass)', () => {
-      let child;
-      mount(
-        <Module providers={[AService]}>
-          <Buffer>
-            <Child onInstance={instance => child = instance}/>
-          </Buffer>
-        </Module>
-      );
-      expect(child).to.have.property('aService').which.is.an.instanceOf(AService);
-    });
+      it('should accessible multiple times', () => {
+        let child;
+        mount(
+          <Module providers={[{provide: AService, useClass: AService}]}>
+            <Buffer>
+              <Child onInstance={instance => child = instance}/>
+            </Buffer>
+          </Module>
+        );
+        expect(child).to.have.property('aService').which.is.an.instanceOf(AService);
+        expect(child).to.have.property('aService').which.is.an.instanceOf(AService);
+      });
 
-    it('should inject service AB for service A (useClass)', () => {
-      let child;
-      mount(
-        <Module providers={[{provide: AService, useClass: ABService}]}>
-          <Buffer>
-            <Child onInstance={instance => child = instance}/>
-          </Buffer>
-        </Module>
-      );
-      expect(child).to.have.property('aService').which.is.an.instanceOf(ABService);
+      it('should inject service (shorthand for useClass)', () => {
+        let child;
+        mount(
+          <Module providers={[AService]}>
+            <Buffer>
+              <Child onInstance={instance => child = instance}/>
+            </Buffer>
+          </Module>
+        );
+        expect(child).to.have.property('aService').which.is.an.instanceOf(AService);
+      });
+
+      it('should inject service AB for service A', () => {
+        let child;
+        mount(
+          <Module providers={[{provide: AService, useClass: ABService}]}>
+            <Buffer>
+              <Child onInstance={instance => child = instance}/>
+            </Buffer>
+          </Module>
+        );
+        expect(child).to.have.property('aService').which.is.an.instanceOf(ABService);
+      });
+
     });
 
     it('should inject service (useValue)', () => {
@@ -99,18 +103,6 @@ describe('component-injection', () => {
       let child;
       mount(
         <Module providers={[{provide: AService, useFactory: () => new AService()}]}>
-          <Buffer>
-            <Child onInstance={instance => child = instance}/>
-          </Buffer>
-        </Module>
-      );
-      expect(child).to.have.property('aService').which.is.an.instanceOf(AService);
-    });
-
-    it('should inject service without defining provider due to "autoBindInjectable" is true (uses useClass internally)', () => {
-      let child: Child;
-      mount(
-        <Module autoBindInjectable={true}>
           <Buffer>
             <Child onInstance={instance => child = instance}/>
           </Buffer>
@@ -139,7 +131,80 @@ describe('component-injection', () => {
         </Buffer>
       );
       expect(() => child.aService).to.throw(/Component "Child" need to be nested in a Module or Provider Component to use dependency injection/);
-    })
+    });
+
+    describe('autoBindInjectable', () => {
+
+      it('should inject service without defining provider', () => {
+        let child: Child;
+        mount(
+          <Module autoBindInjectable={true}>
+            <Buffer>
+              <Child onInstance={instance => child = instance}/>
+            </Buffer>
+          </Module>
+        );
+        expect(child).to.have.property('aService').which.is.an.instanceOf(AService);
+      });
+
+      it('should inject same instance of service into different components', () => {
+        let child1: Child;
+        let child2: Child;
+        mount(
+          <Module autoBindInjectable={true}>
+            <Buffer>
+              <Child onInstance={instance => child1 = instance}/>
+              <Child onInstance={instance => child2 = instance}/>
+            </Buffer>
+          </Module>
+        );
+        expect(child1.aService).to.equal(child2.aService);
+      });
+
+      it('should inject new instance of service into each component', () => {
+        let child1: Child;
+        let child2: Child;
+        mount(
+          <Module autoBindInjectable={true}
+                  providers={[{provide: AService, useClass: AService, noSingleton: true}]}>
+            <Buffer>
+              <Child onInstance={instance => child1 = instance}/>
+              <Child onInstance={instance => child2 = instance}/>
+            </Buffer>
+          </Module>
+        );
+        expect(child1.aService).not.to.equal(child2.aService);
+      });
+
+    });
+
+    it('should inject same instance of service into different components', () => {
+      let child1: Child;
+      let child2: Child;
+      mount(
+        <Module providers={[AService]}>
+          <Buffer>
+            <Child onInstance={instance => child1 = instance}/>
+            <Child onInstance={instance => child2 = instance}/>
+          </Buffer>
+        </Module>
+      );
+      expect(child1.aService).to.equal(child2.aService);
+    });
+
+    it('should inject new instance of service into each component', () => {
+      let child1: Child;
+      let child2: Child;
+      mount(
+        <Module providers={[{provide: AService, useClass: AService, noSingleton: true}]}>
+          <Buffer>
+            <Child onInstance={instance => child1 = instance}/>
+            <Child onInstance={instance => child2 = instance}/>
+          </Buffer>
+        </Module>
+      );
+      expect(child1.aService).not.to.equal(child2.aService);
+    });
 
   });
 

@@ -3,9 +3,9 @@ import * as Adapter from 'enzyme-adapter-react-16';
 import {configure, mount} from 'enzyme';
 import {use, expect} from 'chai';
 import * as sinonChai from 'sinon-chai';
-import {Module} from '../../lib/Module';
+import {Module} from '../../lib/components/Module';
 import {Buffer} from '../setup/Buffer';
-import {Provider} from '../../lib/Provider';
+import {Provider} from '../../lib/components/Provider';
 
 use(sinonChai);
 configure({adapter: new Adapter()});

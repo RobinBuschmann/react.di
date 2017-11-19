@@ -1,8 +1,8 @@
 import {Container} from 'inversify';
 import {expect} from 'chai';
-import {Injectable} from '../../lib/Injectable';
+import {Injectable} from '../../lib/decorators/Injectable';
 import {AService} from '../setup/AService';
-import {Inject} from '../../lib/Inject';
+import {Inject} from '../../lib/decorators/Inject';
 import {BService} from '../setup/BService';
 import {ABService} from '../setup/ABService';
 import {Interceptor, INTERCEPTOR_TOKEN} from '../setup/Interceptor';

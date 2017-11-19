@@ -4,9 +4,9 @@ import * as Adapter from 'enzyme-adapter-react-16';
 import {configure, mount} from 'enzyme';
 import {expect, use} from 'chai';
 import * as sinonChai from 'sinon-chai';
-import {Module} from '../../lib/Module';
+import {Module} from '../../lib/components/Module';
 import {Component} from 'react';
-import {Inject} from '../../lib/Inject';
+import {Inject} from '../../lib/decorators/Inject';
 import {AService} from '../setup/AService';
 import {Buffer} from '../setup/Buffer';
 import {ABService} from '../setup/ABService';
@@ -14,6 +14,9 @@ import {Interceptor, INTERCEPTOR_TOKEN} from '../setup/Interceptor';
 import {AInterceptor} from '../setup/AInterceptor';
 import {BInterceptor} from '../setup/BInterceptor';
 import {BService} from '../setup/BService';
+import {Container, interfaces} from 'inversify';
+import {Injectable} from '../../lib/decorators/Injectable';
+import {getBindingDictionary} from 'inversify/lib/planning/planner';
 
 use(sinonChai);
 configure({adapter: new Adapter()});
@@ -390,6 +393,51 @@ describe('component-injection', () => {
     const warnSpy = spy(console, 'warn');
     child.provokeWaring();
     expect(warnSpy).to.be.called;
+  });
+
+  function merge(container1, container2) {
+    const container = new Container();
+    const bindingDictionary: interfaces.Lookup<interfaces.Binding<any>> = getBindingDictionary(container);
+    const bindingDictionary1: interfaces.Lookup<interfaces.Binding<any>> = getBindingDictionary(container1);
+    const bindingDictionary2: interfaces.Lookup<interfaces.Binding<any>> = getBindingDictionary(container2);
+
+    function copyDictionary(
+      origin: interfaces.Lookup<interfaces.Binding<any>>,
+      destination: interfaces.Lookup<interfaces.Binding<any>>
+    ) {
+      origin.traverse((key, value) => {
+        value.forEach((binding) => {
+          destination.add(binding.serviceIdentifier, binding);
+        });
+      });
+    }
+    copyDictionary(bindingDictionary1, bindingDictionary);
+    copyDictionary(bindingDictionary2, bindingDictionary);
+
+    return container;
+  }
+
+  it('should run', () => {
+
+    @Injectable
+    class Service {
+      private value: string;
+      setValue(value: string) {
+        this.value = value;
+      }
+    }
+
+    const container1 = new Container({defaultScope: 'Singleton'});
+    container1.bind(Service).toSelf();
+
+    const service1 = container1.get(Service);
+    service1.setValue('test');
+
+    const container2 = new Container({defaultScope: 'Singleton'});
+    const container =  merge(container1, container2);
+
+    const service = container.get(Service);
+    console.log(service);
   });
 
 });

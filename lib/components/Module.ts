@@ -1,8 +1,9 @@
 import * as React from 'react';
+import {func} from 'prop-types';
 import {Container} from 'inversify';
 import {Component} from 'react';
 import {Provider} from './Provider';
-import {Binding, executeBindings} from './bindings/Binding';
+import {Binding, executeBindings} from '../bindings/Binding';
 
 export interface ModuleProps {
   providers?: Binding[];
@@ -12,6 +13,10 @@ export interface ModuleProps {
 export class Module extends Component<ModuleProps> {
 
   private container;
+  static childContextTypes = {
+    addContainer: func,
+    getContainer: func,
+  };
 
   constructor(props: ModuleProps, contenxt) {
     super(props, contenxt);

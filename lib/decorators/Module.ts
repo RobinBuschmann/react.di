@@ -2,13 +2,13 @@ import * as React from 'react';
 import {Component} from 'react';
 import {func} from 'prop-types';
 import {Provider} from '../components/Provider';
-import {ModuleMeta} from '../models/ModuleMeta';
+import {Module as ModuleClass} from '../models/Module';
 import {ModuleOptions} from '../interfaces/ModuleOptions';
 
 const contextTypes = {addContainer: func, getContainer: func};
 
-export function Module(options: ModuleOptions) {
-  return target => {
+export function Module(options: ModuleOptions = {}) {
+  return (target: any) => {
     const moduleWrapper = class extends Component {
       container;
       allContainers = new WeakMap();
@@ -18,7 +18,7 @@ export function Module(options: ModuleOptions) {
 
       constructor(props, context) {
         super(props, context);
-        this.container = moduleMeta.getContainer(this.context);
+        this.container = moduleMeta.getInternalContainer(this.context);
       }
 
       getChildContext() {
@@ -33,15 +33,15 @@ export function Module(options: ModuleOptions) {
           React.createElement(
             Provider,
             {container: this.container},
-            React.createElement(target)
+            React.createElement(target, this.props)
           ) as any
         );
       }
     };
 
-    const moduleMeta = new ModuleMeta(moduleWrapper, options);
-    ModuleMeta.setModuleMeta(moduleWrapper, moduleMeta);
+    const moduleMeta = new ModuleClass(moduleWrapper, options);
+    ModuleClass.setModule(moduleWrapper, moduleMeta);
 
-    return moduleWrapper;
+    return moduleWrapper as any;
   }
 }

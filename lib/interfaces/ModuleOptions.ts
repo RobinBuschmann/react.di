@@ -1,10 +1,9 @@
-import {ComponentClass} from 'react';
 import {Binding} from '../bindings/Binding';
 
-export type Imports = Array<ComponentClass<any>>;
+export type Imports = any[];
 
 export interface ModuleOptions {
   imports?: Imports;
-  providers: Binding[];
+  providers?: Binding[];
   autoBindInjectable?: boolean;
 }

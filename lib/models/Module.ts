@@ -28,8 +28,9 @@ export class Module {
   getInternalContainer(context?: ProviderContext) {
     let container = this.getExternalContainer(context);
     if (this.options.imports) {
-      if (!context) {
-        throw new Error('TODO');
+      if (!this.isProviderContext(context)) {
+        throw new Error(`Imports not supported here: When using imports with ${this.target.name}` +
+        ` this module need to be nested in another module.`);
       }
       container = this.getContainerWithImports(this.options.imports, container, context);
     }

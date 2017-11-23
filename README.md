@@ -276,7 +276,7 @@ want a dependency to be singleton set `noSingleton` to `true`:
 
 ##### Injecting a value
 ```typescript
-  {provide: UserService, useValue: someUserService}
+[{provide: UserService, useValue: someUserService}]
 ```
 
 ##### Injection via factories

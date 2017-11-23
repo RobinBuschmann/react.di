@@ -12,7 +12,7 @@ Dependency injection for react based upon [inversify](https://github.com/inversi
     - [Multi injection](#multi-injection)
     - [Inject into React Components](#inject-into-react-components)
     - [Inject into Services](#inject-into-services)
- - [Module (React Component)](#module-react-component)
+ - [Module](#module)
     - [providers (Property)](#providers-property)
       - [Injecting a class constructor](#injecting-a-class-constructor)
       - [Injecting a value](#injecting-a-value)
@@ -136,13 +136,9 @@ export class UserService {
 }
 ```
 
-## Module (React Component)
-The `<Module>` component is a react component, that specifies the
-entry point for dependency injection. All providers that should
-be available for injection will be defined in the components `providers`
-property.
+## Module
 All components that should be feedable with the defined providers,
-need to be nested in the module component - But don't(!) need to be
+need to be nested in a module annotated component - But don't(!) need to be
 direct children.
 
 ### `providers` (Property)

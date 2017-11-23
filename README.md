@@ -312,7 +312,7 @@ class App extends Component{}
 </TestBed>
 ```
 
-### TestBed (React Component)
+#### TestBed (React Component)
 ```typescript jsx
 <TestBed providers={[...]} autoBindInjectable={true}>
   ...

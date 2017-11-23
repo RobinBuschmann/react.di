@@ -8,7 +8,7 @@ Dependency injection for react based upon [inversify](https://github.com/inversi
  - [Installation](#installation)
  - [Getting started](#getting-started)
  - [Injection](#injection)
- - [Sharing providers](#sharing providers)
+ - [Sharing providers](#sharing-providers)
     - [Importing modules](#importing-modules-in-other-modules)
     - [Hierarchical shared providers](#hierarchical-shared-providers)
  - [Testing](#testing)

@@ -8,6 +8,11 @@ Dependency injection for react based upon [inversify](https://github.com/inversi
  - [Installation](#installation)
  - [Getting started](#getting-started)
  - [Injection](#injection)
+     - [Injection from class references](#injection-from-class-references)
+     - [Injection via tokens](#injection-via-tokens)
+     - [Multi injection](#multi-injection)
+     - [Inject into React Components](#inject-into-react-components)
+     - [Inject into Services](#inject-into-services)
  - [Sharing providers](#sharing-providers)
     - [Importing modules](#importing-modules-in-other-modules)
     - [Hierarchical shared providers](#hierarchical-shared-providers)
@@ -15,10 +20,6 @@ Dependency injection for react based upon [inversify](https://github.com/inversi
  - [API](#api)
     - [Injectable](#injectable)
     - [Inject](#inject)
-        - [Injection via tokens](#injection-via-tokens)
-        - [Multi injection](#multi-injection)
-        - [Inject into React Components](#inject-into-react-components)
-        - [Inject into Services](#inject-into-services)
     - [Module](#module)
     - [TestBed](#test-bed-react-component)
     - [providers (Property)](#providers-property)
@@ -256,54 +257,34 @@ All components that should be feedable with the defined providers,
 need to be nested in a module annotated component - But don't(!) need to be
 direct children.
 
-#### `providers` (Property)
+#### `providers`
 Array of all available providers.
 
 ##### Injecting a class constructor
-```jsx
-<Module providers={[
-  {provide: UserService, useClass: UserService}
-]}>
-  ...
-</Module>
+```typescript
+[{provide: UserService, useClass: UserService}]
 ```
 *Shorthand*
-```jsx
-<Module providers={[
-  UserService
-]}>
-  ...
-</Module>
+```typescript
+[UserService]
 ```
 All instantiated dependencies will be a **singleton** by default. If you don't
 want a dependency to be singleton set `noSingleton` to `true`:
-```jsx
-<Module providers={[
-  {provide: UserService, useClass: UserService, noSingleton: true}
-]}>
-  ...
-</Module>
+```typescript
+[{provide: UserService, useClass: UserService, noSingleton: true}]
 ```
 
 ##### Injecting a value
-```jsx
-<Module providers={[
+```typescript
   {provide: UserService, useValue: someUserService}
-]}>
-  ...
-</Module>
 ```
 
 ##### Injection via factories
 Dependencies can be injected via factories. A factory is a simple function,
 that gets the context of the current scope and returns the value, that
 will be injected.
-```jsx
-<Module providers={[
-  {provide: UserService, useFactory: context => someValue}
-]}>
-  ...
-</Module>
+```typescript
+[{provide: UserService, useFactory: context => someValue}]
 ```
 
 #### `autoBindInjectable` (Property)
@@ -312,12 +293,15 @@ class constructors don't need to be defined as providers anymore.
 They will be available for injection by default. 
 So that `[{provide: UserService, useClass: UserService}]` or `[UserService]`
 can be omitted:
-```jsx
-<Module autoBindInjectable={true}>
-  ... // UserService will be available anyway
-</Module>
+```typescript
+@Module({autoBindInjectable: true})
+class App extends Component{}
 ```
-
+```jsx
+<TestBed autoBindInjectable={true}>
+  ... // UserService will be available anyway
+</TestBed>
+```
 
 ## Provider (React Component)
 The `<Provider>` component is a react component, that provides low-level

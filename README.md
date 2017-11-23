@@ -21,14 +21,13 @@ Dependency injection for react based upon [inversify](https://github.com/inversi
     - [Injectable](#injectable)
     - [Inject](#inject)
     - [Module](#module)
-    - [TestBed](#test-bed-react-component)
     - [providers (Option)](#providers-option)
         - [Injecting a class constructor](#injecting-a-class-constructor)
         - [Injecting a value](#injecting-a-value)
         - [Injection via factories](#injection-via-factories)
     - [imports (Option)](#imports-option)
     - [autoBindInjectable (Option)](#autobindinjectable-option)
-    - [Module inheritance](#module-inheritance)
+    - [TestBed](#test-bed-react-component)
     - [Provider (React Component)](#provider-react-component)
 
 ## Installation
@@ -261,13 +260,6 @@ direct children.
 class App extends Component {}
 ```
 
-### TestBed
-```typescript jsx
-<TestBed providers={[...]} autoBindInjectable={true}>
-  ...
-</TestBed>
-```
-
 #### `providers` (Option)
 (optional) Array of all available providers.
 
@@ -320,7 +312,14 @@ class App extends Component{}
 </TestBed>
 ```
 
-## Provider (React Component)
+### TestBed (React Component)
+```typescript jsx
+<TestBed providers={[...]} autoBindInjectable={true}>
+  ...
+</TestBed>
+```
+
+#### Provider (React Component)
 The `<Provider>` component is a react component, that provides low-level
 support for inversifyJS containers. In other words: It takes an 
 inversify container as property. So if you want to use all features

@@ -2,6 +2,7 @@ export {Inject} from './lib/decorators/Inject';
 export {Injectable} from './lib/decorators/Injectable';
 export {Module} from './lib/decorators/Module';
 export {Provider} from './lib/components/Provider';
+export {TestBed} from './lib/components/TestBed';
 export {Binding} from './lib/bindings/Binding';
 export {ClassBinding} from './lib/bindings/ClassBinding';
 export {FactoryBinding} from './lib/bindings/FactoryBinding';

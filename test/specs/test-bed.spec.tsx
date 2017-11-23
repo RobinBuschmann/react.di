@@ -36,4 +36,16 @@ describe('TestBed', () => {
     expect(childInstance).to.have.property('aService').that.is.instanceOf(AService);
   });
 
+  it('should inject services (autoBindInjectable)', () => {
+    let childInstance: Child;
+    mount(
+      <TestBed autoBindInjectable={true}>
+        <Buffer>
+          <Child onInstance={instance => childInstance = instance}/>
+        </Buffer>
+      </TestBed>
+    );
+    expect(childInstance).to.have.property('aService').that.is.instanceOf(AService);
+  });
+
 });

@@ -59,7 +59,7 @@ const CONFIG_TOKEN = 'config'; // or Symbol('config');
 const config: Config = {...};
 ```
 #### 2. Inject service/value into react component
-```tsx
+```typescript jsx
 import {Inject} from 'react.di';
 
 class UserContainer extends Component<any, any> {
@@ -133,7 +133,7 @@ case the identifier needs to be passed explicitly:
 
 ### Inject into React Components
 Dependencies of react component need be injected via property injection:
-```tsx
+```typescript jsx
 import {Inject} from 'react.di';
 
 class UserComponent extends Component<any, any> {

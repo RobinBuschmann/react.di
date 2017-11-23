@@ -22,11 +22,12 @@ Dependency injection for react based upon [inversify](https://github.com/inversi
     - [Inject](#inject)
     - [Module](#module)
     - [TestBed](#test-bed-react-component)
-    - [providers (Property)](#providers-property)
+    - [providers (Option)](#providers-option)
         - [Injecting a class constructor](#injecting-a-class-constructor)
         - [Injecting a value](#injecting-a-value)
         - [Injection via factories](#injection-via-factories)
-    - [autoBindInjectable (Property)](#autobindinjectable-property)
+    - [imports (Option)](#imports-option)
+    - [autoBindInjectable (Option)](#autobindinjectable-option)
     - [Module inheritance](#module-inheritance)
     - [Provider (React Component)](#provider-react-component)
 
@@ -251,14 +252,24 @@ and in which property the injected value should be referenced.
 All components that should be feedable with the defined providers,
 need to be nested in a module annotated component - But don't(!) need to be
 direct children.
+```typescript jsx
+@Module({
+  providers: [...],
+  imports: [...],
+  autoBindInjectable: true, // default is false
+})
+class App extends Component {}
+```
 
-### TestBed (React component)
-All components that should be feedable with the defined providers,
-need to be nested in a module annotated component - But don't(!) need to be
-direct children.
+### TestBed
+```typescript jsx
+<TestBed providers={[...]} autoBindInjectable={true}>
+  ...
+</TestBed>
+```
 
-#### `providers`
-Array of all available providers.
+#### `providers` (Option)
+(optional) Array of all available providers.
 
 ##### Injecting a class constructor
 ```typescript
@@ -287,8 +298,14 @@ will be injected.
 [{provide: UserService, useFactory: context => someValue}]
 ```
 
-#### `autoBindInjectable` (Property)
-(default: `false`) When `autoBindInjectable` is set to `true`, injectable
+#### `imports` (Option)
+(optional) Array of all modules that should be imported.
+```typescript
+[CommonModule, UserModule]
+```
+
+#### `autoBindInjectable` (Option)
+(optional, default: `false`) When `autoBindInjectable` is set to `true`, injectable
 class constructors don't need to be defined as providers anymore.
 They will be available for injection by default. 
 So that `[{provide: UserService, useClass: UserService}]` or `[UserService]`

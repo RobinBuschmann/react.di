@@ -77,7 +77,7 @@ class UserContainer extends Component<any, any> {
 }
 ```
 #### 3. Setup module
-```jsx
+```typescript jsx
 import {Module} from 'react.di';
 
 @Module({
@@ -159,7 +159,7 @@ export class UserService {
 }
 ```
 
-### Sharing providers
+## Sharing providers
 Providers can be shared via importing from siblings or inheriting them from
 parent components.
 
@@ -167,7 +167,7 @@ parent components.
 Modules can be imported in other modules to share its providers. To make
 this possible the modules that are using import need to be nested  in 
 parent module:
-```jsx
+```typescript jsx
 @Module({providers: [CommonService]})
 class CommonModule extends Component {}
 
@@ -194,7 +194,7 @@ Nesting `Module` annotated components in another `Module` annotated components
 is supported.
 All defined providers of the parent module will be inherited to its
 child modules:
-```jsx
+```typescript jsx
 @Module({providers: [UserService]})
 class UserModule extends Component {}
 
@@ -213,7 +213,7 @@ if they are also defined in its child.
 For testing purposes `react.di` provides a `TestBed` component. Nest the
 components you want to test in `TestBed` and setup its dependencies in
 the `providers` prop of `TestBed`:
-```jsx
+```typescript jsx
 import {mount} from 'enzyme';
 
 mount(
@@ -223,7 +223,7 @@ mount(
 );
 ```
 or for defining a much simpler mock:
-```jsx
+```typescript jsx
 mount(
   <TestBed providers={[{provide: UserService, useValue: {getUser() {...}}}]}>
     <UserProfileContainer/>
@@ -324,7 +324,7 @@ The `<Provider>` component is a react component, that provides low-level
 support for inversifyJS containers. In other words: It takes an 
 inversify container as property. So if you want to use all features
 of inversify, this is the component you will fall in love with:
-```jsx
+```typescript jsx
 const container = new Container();
 container.bind(Ninja).to(Samurai);
 

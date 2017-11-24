@@ -7,3 +7,4 @@ export {Binding} from './lib/bindings/Binding';
 export {ClassBinding} from './lib/bindings/ClassBinding';
 export {FactoryBinding} from './lib/bindings/FactoryBinding';
 export {ValueBinding} from './lib/bindings/ValueBinding';
+export {Container} from 'inversify';

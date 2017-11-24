@@ -45,7 +45,7 @@ Your `tsconfig.json` needs to be configured with  the following flags:
 #### 1. Define injectables (values/class)
 *Service*
 ```typescript
-import {Injectable} from 'react.di';
+import {Injectable, Inject} from 'react.di';
 
 @Injectable
 export class UserService {

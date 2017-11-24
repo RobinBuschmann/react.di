@@ -1,4 +1,4 @@
-import {Injectable} from '../../lib/Injectable';
+import {Injectable} from '../../lib/decorators/Injectable';
 
 @Injectable
 export class BService {

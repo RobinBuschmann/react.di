@@ -1,14 +1,17 @@
 import * as React from 'react';
-import {Component, ReactElement} from 'react';
+import {Component, ComponentClass, ReactElement} from 'react';
 import {Container} from 'inversify';
 import {object} from 'prop-types';
 
 export interface ProviderProps {
   container: Container;
+  imports?: Array<ComponentClass<any>>;
 }
 
 export class Provider extends Component<ProviderProps> {
-  static childContextTypes = {container: object.isRequired};
+  static childContextTypes = {
+    container: object.isRequired,
+  };
   static contextTypes = {container: object};
   static isReact16Plus = parseFloat(React.version) >= 16;
 

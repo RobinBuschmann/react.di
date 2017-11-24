@@ -1,8 +1,8 @@
 import 'reflect-metadata';
 import {interfaces} from 'inversify';
 import ServiceIdentifier = interfaces.ServiceIdentifier;
-import {componentInject} from './component-injection';
-import {serviceInject} from './service-injection';
+import {componentInject} from '../component-injection';
+import {serviceInject} from '../service-injection';
 
 export function Inject(target: object, propertyKey: string | symbol, parameterIndex: number);
 export function Inject(target: object, propertyKey: string | symbol);

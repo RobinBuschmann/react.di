@@ -1,5 +1,5 @@
 import {Injectable} from '../../lib/decorators/Injectable';
 
 @Injectable
-export class ABService {
+export class CService {
 }

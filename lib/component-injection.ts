@@ -21,9 +21,8 @@ function setDependentProperty(target, propertyKey, identifier, isArrayType) {
       Object.defineProperty(this, propertyKey, {value});
       return value;
     },
-    set() {
-      // tslint:disable:no-console
-      console.warn(`Value cannot be set before it is injected (${target['constructor'].name} -> ${propertyKey})`);
+    set(value) {
+      Object.defineProperty(this, propertyKey, {value});
     }
   });
 }

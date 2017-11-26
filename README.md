@@ -27,12 +27,12 @@ Dependency injection for react based upon [inversify](https://github.com/inversi
         - [Injection via factories](#injection-via-factories)
     - [imports (Option)](#imports-option)
     - [autoBindInjectable (Option)](#autobindinjectable-option)
-    - [TestBed](#test-bed-react-component)
+    - [TestBed (React Component)](#test-bed-react-component)
     - [Provider (React Component)](#provider-react-component)
 
 ## Installation
 ```
-npm install react.di reflect-metadata --save
+npm install react.di@next reflect-metadata --save
 ```
 
 Your `tsconfig.json` needs to be configured with  the following flags:
@@ -40,6 +40,8 @@ Your `tsconfig.json` needs to be configured with  the following flags:
 "experimentalDecorators": true,
 "emitDecoratorMetadata": true
 ```
+
+**For version 1.0 see https://github.com/RobinBuschmann/react.di/tree/1.0**
 
 ## Getting started
 #### 1. Define injectables (values/class)

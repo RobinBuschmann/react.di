@@ -167,9 +167,7 @@ Providers can be shared via importing from siblings or inheriting them from
 parent components.
 
 #### Importing modules in other modules
-Modules can be imported in other modules to share its providers. To make
-this possible the modules that are using import need to be nested  in 
-parent module:
+Modules can be imported in other modules to share its providers.
 ```typescript jsx
 @Module({providers: [CommonService]})
 class CommonModule extends Component {}

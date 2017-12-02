@@ -6,6 +6,8 @@ export type TestBedProps = ContainerOptions;
 
 // Workaround, cause ComponentClass leads to tsc error
 export class TestBedType extends Component<TestBedProps> {
+
+  /* istanbul ignore next */
   render() {
     return {} as any;
   }

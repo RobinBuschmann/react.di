@@ -694,7 +694,7 @@ describe('component-injection', () => {
       expect(aBChildInstance.aService).to.equal(aChildInstance.aService);
     });
 
-    it('should throw because module which imports another is not nested in a parent module', () => {
+    it('should not throw even if module which imports another is not nested in a parent module', () => {
       @Module({
         providers: [CService]
       })
@@ -710,7 +710,7 @@ describe('component-injection', () => {
           return <Buffer/>
         }
       }
-      expect(() => mount(<AModule/>)).to.throw(/Imports not supported here: When using imports with/);
+      expect(() => mount(<AModule/>)).to.not.throw();
     });
 
   });

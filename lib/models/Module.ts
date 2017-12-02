@@ -11,37 +11,24 @@ export class Module {
               private options: ModuleOptions) {
   }
 
-  getExternalContainer(context?: ProviderContext) {
-    let container;
-    if (this.isProviderContext(context)) {
-      container = (context as ProviderContext).getContainer(this.target);
-    }
+  getExternalContainer(context: ProviderContext) {
+    let container = (context as ProviderContext).childContainers.get(this.target);
     if (!container) {
       container = createContainerWithBindings(this.options);
-      if (this.isProviderContext(context)) {
-        (context as ProviderContext).addContainer(this.target, container);
-      }
+      context.childContainers.set(this.target, container);
     }
     return container;
   }
 
-  getInternalContainer(context?: ProviderContext) {
+  getInternalContainer(context: ProviderContext) {
     let container = this.getExternalContainer(context);
     if (this.options.imports) {
-      if (!this.isProviderContext(context)) {
-        throw new Error(`Imports not supported here: When using imports with ${this.target.name}` +
-        ` this module need to be nested in another module.`);
-      }
       container = this.getContainerWithImports(this.options.imports, container, context);
     }
     return container;
   }
 
-  private isProviderContext(context?: ProviderContext) {
-    return context && context.addContainer && context.getContainer;
-  }
-
-  private getContainerWithImports(imports: Imports, container: Container, context?: ProviderContext) {
+  private getContainerWithImports(imports: Imports, container: Container, context: ProviderContext) {
     return imports.reduce((container, toImportTarget) => {
       const module = Module.getModule(toImportTarget);
       const toImportContainer = module.getExternalContainer(context);

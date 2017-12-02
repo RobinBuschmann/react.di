@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {Component, ReactNode} from 'react';
 import {Provider} from './components/Provider';
-import {func, object} from 'prop-types';
+import {object} from 'prop-types';
 import {Container} from 'inversify';
 
 export interface ModuleCreationOptions {
@@ -10,7 +10,7 @@ export interface ModuleCreationOptions {
 }
 
 export function createModuleComponent({getContainer, getChild}: ModuleCreationOptions) {
-  const contextTypes = {addContainer: func, getContainer: func, childContainers: object};
+  const contextTypes = {childContainers: object};
   return class extends Component {
     container: Container;
 

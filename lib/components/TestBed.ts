@@ -1,10 +1,17 @@
-import {Component, ComponentClass} from 'react';
+import {Component} from 'react';
 import {createModuleComponent} from '../module-service';
 import {ContainerOptions, createContainerWithBindings} from '../container-service';
 
 export type TestBedProps = ContainerOptions;
 
-export const TestBed: ComponentClass<TestBedProps> = createModuleComponent({
+// Workaround, cause ComponentClass leads to tsc error
+export class TestBedType extends Component<TestBedProps> {
+  render() {
+    return {} as any;
+  }
+}
+
+export const TestBed: typeof TestBedType = createModuleComponent({
   getContainer(this: Component) {
     return createContainerWithBindings(this.props);
   },

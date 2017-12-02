@@ -641,6 +641,59 @@ describe('component-injection', () => {
       expect(() => abcChildInstance.cService).to.throw();
     });
 
+    it('should create same instances for different layers', () => {
+
+      let aChildInstance: AChild;
+      let aBChildInstance: ABChild;
+
+      @Module({
+        providers: [AService]
+      })
+      class AModule extends Component {
+        render() {
+          return <Buffer>
+            <AChild onInstance={instance => aChildInstance = instance}/>
+          </Buffer>
+        }
+      }
+
+      @Module({
+        imports: [AModule],
+        providers: [BService]
+      })
+      class BModule extends Component {
+        render() {
+          return <Buffer>
+            <ABChild onInstance={instance => aBChildInstance = instance}/>
+          </Buffer>
+        }
+      }
+
+      @Module()
+      class LayerA extends Component {
+        render() {
+          return <Buffer>
+            <AModule/>
+          </Buffer>;
+        }
+      }
+
+      @Module()
+      class Root extends Component {
+        render() {
+          return <Buffer>
+            <LayerA/>
+            <BModule/>
+          </Buffer>;
+        }
+      }
+
+      mount(<Root/>);
+      expect(aBChildInstance).to.have.property('aService').which.is.an.instanceOf(AService);
+      expect(aBChildInstance).to.have.property('bService').which.is.an.instanceOf(BService);
+      expect(aBChildInstance.aService).to.equal(aChildInstance.aService);
+    });
+
     it('should throw because module which imports another is not nested in a parent module', () => {
       @Module({
         providers: [CService]

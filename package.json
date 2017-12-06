@@ -1,6 +1,6 @@
 {
   "name": "react.di",
-  "version": "2.0.0-beta.3",
+  "version": "2.0.0",
   "description": "Dependency injection for react",
   "main": "index.js",
   "types": "index.d.ts",

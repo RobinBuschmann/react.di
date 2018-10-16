@@ -23,11 +23,6 @@ export class Provider extends Component<ProviderProps> {
     }
   }
 
-  componentWillReceiveProps() {
-    // tslint:disable:no-console
-    console.warn('Container can only be set once to <Provider> and therefore not be overridden.');
-  }
-
   getChildContext() {
     const {container} = this.props;
     this.trySetParentContainer(container);

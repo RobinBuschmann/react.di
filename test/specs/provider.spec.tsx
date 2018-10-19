@@ -1,7 +1,6 @@
 import * as React from 'react';
 import * as Adapter from 'enzyme-adapter-react-16';
 import {configure, mount} from 'enzyme';
-import {spy} from 'sinon';
 import {use, expect} from 'chai';
 import * as sinonChai from 'sinon-chai';
 import {Buffer} from '../setup/Buffer';
@@ -44,19 +43,6 @@ describe('Provider', () => {
       </Provider>
     )).to.not.throw();
     Provider.isReact16Plus = true;
-  });
-
-  it('should log warning cause container cannot be overridden', () => {
-    const wrapper = mount(
-      <Provider container={new Container()}>
-        <Buffer/>
-        <Buffer/>
-        <Buffer/>
-      </Provider>
-    );
-    const warnSpy = spy(console, 'warn');
-    wrapper.setProps({container: new Container()});
-    expect(warnSpy).to.be.called;
   });
 
 });

@@ -6,7 +6,7 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "noUnusedLocals": true,
-    "sourceMap": true,
+    "sourceMap": false,
     "declaration": true,
     "pretty": true,
     "strictNullChecks": true,

@@ -54,7 +54,8 @@
   },
   "homepage": "https://github.com/RobinBuschmann/react.di#readme",
   "peerDependencies": {
-    "react": "^16"
+    "react": "*",
+    "react-dom": "*"
   },
   "devDependencies": {
     "@types/chai": "^4.0.4",
@@ -70,8 +71,8 @@
     "jsdom": "^11.3.0",
     "mocha": "^5.2.0",
     "nyc": "^13.2.0",
-    "react": "^16.0.0",
-    "react-dom": "^16.0.0",
+    "react": "^16.7.0",
+    "react-dom": "^16.7.0",
     "react-test-renderer": "^16.0.0",
     "reflect-metadata": "^0.1.10",
     "sinon": "^4.1.1",
